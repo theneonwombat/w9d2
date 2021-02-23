@@ -8,9 +8,11 @@ function GameView (ctx) {
 }
 
 GameView.prototype.start = function () {
-  const boundMove = this.game.move.bind(this);
+  // Have to bind these functions because they are being used as callbacks
+  // and will accordingly be invoked function style
+  const boundMove = this.game.move.bind(this.game);
   setInterval(boundMove, 20);
-  const boundDraw = this.game.draw.bind(this, this.ctx);
+  const boundDraw = this.game.draw.bind(this.game, this.ctx);
   setInterval(boundDraw, 20);
 }
 
