@@ -1,6 +1,8 @@
 const MovingObject = require('./moving_object.js');
+const Asteroid = require('./asteroid.js');
 
 window.MovingObject = MovingObject;
+window.Asteroid = Asteroid;
 
 console.log('webpack is working!');
 
@@ -16,8 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
   
   const ctx = canvasEl.getContext('2d');
 
+  const a = new Asteroid({pos: [30, 30]});
+  a.draw(ctx);
+  
   mo.draw(ctx);
-
-
-
 });
