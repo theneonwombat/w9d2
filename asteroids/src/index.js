@@ -10,3 +10,14 @@ const mo = new MovingObject({
   radius: 5,
   color: "#00FF00"
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const canvasEl = document.getElementById("game-canvas");
+  
+  const ctx = canvasEl.getContext('2d');
+
+  mo.draw(ctx);
+
+
+
+});
