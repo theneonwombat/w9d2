@@ -8,6 +8,7 @@ function GameView (ctx) {
 }
 
 GameView.prototype.start = function () {
+  this.bindKeyHandlers();
   // Have to bind these functions because they are being used as callbacks
   // and will accordingly be invoked function style
   const boundStep = this.game.step.bind(this.game);
@@ -16,4 +17,11 @@ GameView.prototype.start = function () {
   setInterval(boundDraw, 20);
 }
 
+GameView.prototype.bindKeyHandlers = function() {
+  const boundPower = this.game.ship.power.bind(this.game.ship);
+  key ("up, w", function() { boundPower([0,-1])});
+  key ("down, s", function() { boundPower([0,1])});
+  key ("left, a", function() { boundPower([-1,0])});
+  key ("right, d", function() { boundPower([1,0])});
+}
 module.exports = GameView;
