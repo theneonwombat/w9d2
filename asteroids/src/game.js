@@ -6,9 +6,9 @@ const { Howl, Howler } = require('howler');
 
 function Game() {
     this.CONSTANTS = {
-        DIM_X: 500,
+        DIM_X: 1000,
         DIM_Y: 500,
-        NUM_ASTEROIDS: 4
+        NUM_ASTEROIDS: 15
     };
     this.asteroids = [];
     this.bullets = [];
@@ -36,6 +36,7 @@ Game.prototype.draw = function (ctx, bg) {
     for (let i = 0; i < objects.length; i++) {
         if (objects[i]) objects[i].draw(ctx);
     }
+    requestAnimationFrame(this.draw.bind(this, ctx, bg));
 }
 
 Game.prototype.move = function () {

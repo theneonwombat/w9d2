@@ -18,7 +18,8 @@ GameView.prototype.start = function () {
   bg.src = './space.jpg';
   bg.addEventListener('load', () => {
     const boundDraw = this.game.draw.bind(this.game, this.ctx, bg);
-    setInterval(boundDraw, 20);
+    requestAnimationFrame(boundDraw);
+    // setInterval(boundDraw, 20);
   });
 }
 
