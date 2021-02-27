@@ -5,7 +5,7 @@ const { Howl, Howler } = require('howler');
 
 Util.inherits(Bullet, MovingObject);
 
-Object.defineProperty(Bullet, "COLOR", { value: "red" });
+Object.defineProperty(Bullet, "COLOR", { value: "lightgreen" });
 Object.defineProperty(Bullet, "RADIUS", { value: 2 });
 Object.defineProperty(Bullet, "REL_SPEED", { value: 3 });
 
