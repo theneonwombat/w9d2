@@ -1,4 +1,5 @@
 const Game = require('./game.js');
+const { sounds } = require('./sound.js');
 
 function GameView (ctx) {
   this.game = new Game();
@@ -13,8 +14,12 @@ GameView.prototype.start = function () {
   // and will accordingly be invoked function style
   const boundStep = this.game.step.bind(this.game);
   setInterval(boundStep, 20);
-  const boundDraw = this.game.draw.bind(this.game, this.ctx);
-  setInterval(boundDraw, 20);
+  const bg = new Image();
+  bg.src = './space.jpg';
+  bg.addEventListener('load', () => {
+    const boundDraw = this.game.draw.bind(this.game, this.ctx, bg);
+    setInterval(boundDraw, 20);
+  });
 }
 
 GameView.prototype.bindKeyHandlers = function() {
@@ -23,5 +28,8 @@ GameView.prototype.bindKeyHandlers = function() {
   key ("down, s", function() { boundPower([0,1])});
   key ("left, a", function() { boundPower([-1,0])});
   key ("right, d", function() { boundPower([1,0])});
+
+  const boundFire = this.game.ship.fireBullet.bind(this.game.ship);
+  key ("space", function() { boundFire(); });
 }
 module.exports = GameView;

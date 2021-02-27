@@ -1,3 +1,5 @@
+const Util = require('./utils.js');
+
 function MovingObject (options) {
   this.pos = options.pos;
   this.vel = options.vel;
@@ -16,25 +18,21 @@ MovingObject.prototype.draw = function (ctx) {
 
 MovingObject.prototype.move = function() {
   this.pos = [this.pos[0]+this.vel[0], this.pos[1]+this.vel[1]];
-  this.game.wrap(this.pos);
+  if (this.isWrappable()) this.game.wrap(this.pos, this.radius);
+  else if (this.game.outOfBounds(this.pos)) this.game.remove(this);
 }
 
 MovingObject.prototype.isCollidedWith = function (otherObject) {
   const radii = this.radius + otherObject.radius;
-  if (radii > this.distance(this.pos, otherObject.pos)) return true;
+  if (radii > Util.distance(this.pos, otherObject.pos)) return true;
   return false;
 }
 
-MovingObject.prototype.distance = function (pos1, pos2) {
-  const dist_x = pos2[0] - pos1[0];
-  const dist_y = pos2[1] - pos1[1];
-  
-  return Math.sqrt((dist_x * dist_x) + (dist_y * dist_y));
-}
-
 MovingObject.prototype.collideWith = function (otherObject) {
-    // this.game.remove(otherObject);
-    // this.game.remove(this);
+}   
+
+MovingObject.prototype.isWrappable = function() {
+  return true;
 }
 
 module.exports = MovingObject;
