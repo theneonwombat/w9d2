@@ -14,7 +14,7 @@ function Game() {
     this.bullets = [];
     this.addAsteroids(); 
     this.ship = new Ship({pos: this.randomPosition(), game: this});
-    this.explosion = new Howl({ src: ['explosion.wav'], html5:true, volume: 1.0});
+    this.explosion = new Howl({ src: ['./sounds/explosion.wav'], html5:true, volume: 1.0});
 }
 
 Game.prototype.addAsteroids = function () {

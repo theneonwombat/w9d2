@@ -11,8 +11,17 @@ function MovingObject (options) {
 MovingObject.prototype.draw = function (ctx) {
   ctx.beginPath();
   ctx.arc(...this.pos, this.radius, 0, 2*Math.PI);
-  ctx.fillStyle = this.color;
-  ctx.fill();
+  if (this.img) {
+    ctx.save();
+    ctx.clip();
+    ctx.drawImage(this.img, this.pos[0]-this.radius,
+                            this.pos[1]-this.radius);
+    ctx.restore();
+  }
+  else {
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  }
   ctx.closePath();
 }
 

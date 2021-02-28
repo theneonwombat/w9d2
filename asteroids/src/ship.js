@@ -8,14 +8,14 @@ Util.inherits(Ship, MovingObject);
 
 Object.defineProperty(Ship, "COLOR", {value: "orange"});
 Object.defineProperty(Ship, "RADIUS", {value: 10});
-Object.defineProperty(Ship, "MAX_SPEED", {value: 10});
+//Object.defineProperty(Ship, "MAX_SPEED", {value: 10});
 
 
 function Ship (options) {
     MovingObject.call(this, {pos: options.pos, vel: [0,0], game: options.game});
     this.color = Ship.COLOR;
     this.radius = Ship.RADIUS;
-    this.blast = new Howl({ src: ['blaster.wav'], html5: true });
+    this.blast = new Howl({ src: ['./sounds/blaster.wav'], html5: true });
 
 }
 
