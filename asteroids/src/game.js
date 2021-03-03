@@ -18,9 +18,8 @@ function Game() {
 }
 
 Game.prototype.addAsteroids = function () {
-    const that = this;
     for (let i = 0; i < this.CONSTANTS.NUM_ASTEROIDS; i++) {
-        this.add(new Asteroid({pos: this.randomPosition(), game: that}));
+        this.add(new Asteroid({pos: this.randomPosition(), game: this}));
     }
 }
 
@@ -36,7 +35,35 @@ Game.prototype.draw = function (ctx, bg) {
     for (let i = 0; i < objects.length; i++) {
         if (objects[i]) objects[i].draw(ctx);
     }
-    requestAnimationFrame(this.draw.bind(this, ctx, bg));
+    ctx.beginPath();
+    ctx.font = "20px 'DotGothic16', sans-serif";
+    ctx.fillStyle = "white";
+    ctx.fillText(`Lives: ${this.ship.lives}`, this.CONSTANTS.DIM_X - 100, 25);
+    ctx.fill();
+    if (!this.gameOver(ctx))
+        requestAnimationFrame(this.draw.bind(this, ctx, bg));
+}
+
+Game.prototype.gameOver = function (ctx) {
+    if (this.asteroids.length === 0) {
+        ctx.beginPath();
+        ctx.font = "100px 'Fascinate', cursive";
+        ctx.fillStyle = "red";
+        ctx.fillText("YOU WIN!!!", this.CONSTANTS.DIM_X / 4 - 20,
+            this.CONSTANTS.DIM_Y / 2 + 20);
+        ctx.fill();
+        return true;
+    }
+    if (this.ship.lives === 0) {
+        ctx.beginPath();
+        ctx.font = "100px 'Fascinate', cursive";
+        ctx.fillStyle = "yellow";
+        ctx.fillText("YOU LOSE!!!", this.CONSTANTS.DIM_X / 4 - 20,
+            this.CONSTANTS.DIM_Y / 2 + 20);
+        ctx.fill();
+        return true;
+    }
+    return false;
 }
 
 Game.prototype.move = function () {
@@ -91,6 +118,9 @@ Game.prototype.remove = function (obj) {
         const astIndex = this.asteroids.indexOf(obj);
         this.asteroids.splice(astIndex, 1);
         this.explosion.play();
+        if (this.asteroids.length === 0) {
+            
+        }
     }
     else if (obj instanceof Bullet) {
         const bulIndex = this.bullets.indexOf(obj);

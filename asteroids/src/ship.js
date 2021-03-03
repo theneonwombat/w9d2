@@ -6,9 +6,9 @@ const { Howl, Howler } = require('howler');
 
 Util.inherits(Ship, MovingObject);
 
-Object.defineProperty(Ship, "COLOR", {value: "orange"});
+Object.defineProperty(Ship, "COLOR", { value: "#c19a6b"});
 Object.defineProperty(Ship, "RADIUS", {value: 10});
-//Object.defineProperty(Ship, "MAX_SPEED", {value: 10});
+Object.defineProperty(Ship, "LIVES", {value: 3});
 
 
 function Ship (options) {
@@ -16,11 +16,14 @@ function Ship (options) {
     this.color = Ship.COLOR;
     this.radius = Ship.RADIUS;
     this.blast = new Howl({ src: ['./sounds/blaster.wav'], html5: true });
-
+    this.lives = Ship.LIVES;
 }
 
 Ship.prototype.relocate = function() {
-    this.pos = this.game.randomPosition();
+    if (--this.lives === 0) {
+        this.pos = [-1, -1];
+    }
+    else this.pos = this.game.randomPosition();
     this.vel = [0,0];
 }
 
@@ -30,7 +33,6 @@ Ship.prototype.speed = function() {
 
 Ship.prototype.power = function (impulse) {
     this.vel = Util.addVectors(this.vel, impulse);
-    // if (this.speed(vel) <= Ship.MAX_SPEED) this.vel = vel; 
 }
 
 Ship.prototype.fireBullet = function() {
